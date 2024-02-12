@@ -52,7 +52,7 @@ func Drone() error {
 		return err
 	}
 
-	if err := sh.RunV("drone", "--server", "https://drone.kengine.net", "sign", "--save", "khulnasoft/kengine-plugin-sdk-go"); err != nil {
+	if err := sh.RunV("drone", "--server", "https://drone.khulnasoft.com", "sign", "--save", "khulnasoft/kengine-plugin-sdk-go"); err != nil {
 		return err
 	}
 
