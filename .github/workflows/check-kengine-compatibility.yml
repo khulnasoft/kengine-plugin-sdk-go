@@ -1,0 +1,53 @@
+# Checks if the current update to go.mod is compatible with Kengine.
+
+name: Detect breaking change with Kengine
+
+on:
+  pull_request:
+    paths:
+      - 'go.mod'
+      - 'go.sum'
+    branches:
+      - 'main'
+
+jobs:
+  buildPR:
+    name: Build PR
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        path: './kengine-plugin-sdk-go'
+    - uses: actions/checkout@v4
+      with:
+        repository: 'khulnasoft/kengine'
+        path: './kengine'
+    - uses: actions/setup-go@v5
+      with:
+        cache: false
+        check-latest: true
+        go-version-file: 'kengine-plugin-sdk-go/go.mod'
+
+    - name: Check if branch exists in Kengine
+      working-directory: './kengine'
+      run: |
+        if git ls-remote --heads --quiet --exit-code origin ${{ github.head_ref }}
+        then
+          echo "Found branch ${{ github.head_ref }} in Kengine"
+          git fetch origin ${{ github.head_ref }}
+          git checkout ${{ github.head_ref }}
+        else
+          echo "Branch ${{ github.head_ref }} not found in Kengine"
+        fi
+
+    - name: Link sdk
+      working-directory: './kengine'
+      run: echo 'replace github.com/khulnasoft/kengine-plugin-sdk-go => ../kengine-plugin-sdk-go' >> go.mod
+
+    - name: Automatic updates
+      working-directory: './kengine'
+      run: go mod tidy
+
+    - name: Build Kengine
+      working-directory: './kengine'
+      run: make build-go

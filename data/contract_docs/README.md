@@ -1,0 +1,1 @@
+Repo Moved to [khulnasoft/dataplane/docs/contracts](https://github.com/khulnasoft/dataplane/tree/main/docs/contract). View at https://khulnasoft.github.io/dataplane/contract
