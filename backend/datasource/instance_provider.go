@@ -37,7 +37,7 @@ func NewInstanceManager(fn InstanceFactoryFunc) instancemgmt.InstanceManager {
 //
 // The instance provider is responsible for providing cache keys for data source instances,
 // creating new instances when needed and invalidating cached instances when they have been
-// updated in Kengine.
+// updated in Grafana.
 // Cache key is based on the numerical data source identifier.
 // If fn is nil, NewInstanceProvider panics.
 func NewInstanceProvider(fn InstanceFactoryFunc) instancemgmt.InstanceProvider {
@@ -68,8 +68,8 @@ func (ip *instanceProvider) GetKey(ctx context.Context, pluginContext backend.Pl
 }
 
 func (ip *instanceProvider) NeedsUpdate(_ context.Context, pluginContext backend.PluginContext, cachedInstance instancemgmt.CachedInstance) bool {
-	curConfig := pluginContext.KengineConfig
-	cachedConfig := cachedInstance.PluginContext.KengineConfig
+	curConfig := pluginContext.GrafanaConfig
+	cachedConfig := cachedInstance.PluginContext.GrafanaConfig
 	configUpdated := !cachedConfig.Equal(curConfig)
 
 	curDataSourceSettings := pluginContext.DataSourceInstanceSettings

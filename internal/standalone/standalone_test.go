@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	pluginID = "kengine-test-datasource"
+	pluginID = "grafana-test-datasource"
 	addr     = "localhost:1234"
 )
 
@@ -76,7 +76,7 @@ func TestClientModeEnabled(t *testing.T) {
 	})
 
 	t.Run("Enabled by env var", func(t *testing.T) {
-		t.Setenv("GF_PLUGIN_GRPC_ADDRESS_KHULNASOFT_TEST_DATASOURCE", addr)
+		t.Setenv("GF_PLUGIN_GRPC_ADDRESS_GRAFANA_TEST_DATASOURCE", addr)
 
 		settings, enabled := ClientModeEnabled(pluginID)
 		require.True(t, enabled)
@@ -125,7 +125,7 @@ func TestClientModeEnabled(t *testing.T) {
 	})
 
 	t.Run("Enabled if pid.txt exists, but is empty", func(t *testing.T) {
-		t.Setenv("GF_PLUGIN_GRPC_ADDRESS_KHULNASOFT_TEST_DATASOURCE", addr)
+		t.Setenv("GF_PLUGIN_GRPC_ADDRESS_GRAFANA_TEST_DATASOURCE", addr)
 
 		curProcPath, err := os.Executable()
 		require.NoError(t, err)
@@ -145,7 +145,7 @@ func TestClientModeEnabled(t *testing.T) {
 	})
 
 	t.Run("Disabled if pid.txt exists, but has invalid pid", func(t *testing.T) {
-		t.Setenv("GF_PLUGIN_GRPC_ADDRESS_KHULNASOFT_TEST_DATASOURCE", addr)
+		t.Setenv("GF_PLUGIN_GRPC_ADDRESS_GRAFANA_TEST_DATASOURCE", addr)
 
 		curProcPath, err := os.Executable()
 		require.NoError(t, err)

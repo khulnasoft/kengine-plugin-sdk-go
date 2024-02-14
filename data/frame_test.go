@@ -203,7 +203,7 @@ func ExampleFrame_timeSeriesMulti() {
 
 	// Each Frame should have its value sorted by time in ascending order.
 
-	// See https://khulnasoft.github.io/dataplane/contract/timeseries for more information.
+	// See https://grafana.github.io/dataplane/contract/timeseries for more information.
 
 	res := mockResponse{
 		[]mockSeries{
@@ -283,7 +283,7 @@ func ExampleFrame_timeSeriesWide() {
 	// a "wide" dataframe can be created that holds all the responses. So your response is
 	// all in a Single Frame.
 
-	// See https://khulnasoft.github.io/dataplane/contract/timeseries for more information.
+	// See https://grafana.github.io/dataplane/contract/timeseries for more information.
 
 	singleTimeIndexRes := mockResponse{
 		[]mockSeries{
@@ -358,9 +358,9 @@ func ExampleFrame_timeSeriesLong() {
 
 	// Presently the backend supports converting Long formatted series to "Wide" format
 	// which the frontend understands. Goal is frontend support eventually
-	// (https://github.com/khulnasoft/khulnasoft/issues/22219).
+	// (https://github.com/grafana/grafana/issues/22219).
 
-	// See https://khulnasoft.github.io/dataplane/contract/timeseries for more information.
+	// See https://grafana.github.io/dataplane/contract/timeseries for more information.
 
 	type aTable struct {
 		Headers []string

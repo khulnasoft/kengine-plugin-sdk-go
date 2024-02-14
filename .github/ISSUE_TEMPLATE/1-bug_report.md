@@ -6,7 +6,7 @@ labels: 'bug'
 
 <!--
 Please use this template while reporting a bug and provide as much info as possible.
-Questions should be posted to https://community.khulnasoft.com
+Questions should be posted to https://community.grafana.com
 -->
 
 **What happened**:
@@ -19,5 +19,5 @@ Questions should be posted to https://community.khulnasoft.com
 
 **Environment**:
 - SDK version:
-- Khulnasoft version:
+- Grafana version:
 - Go version:

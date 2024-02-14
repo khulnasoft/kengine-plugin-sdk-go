@@ -11,10 +11,10 @@ import (
 	"github.com/khulnasoft/kengine-plugin-sdk-go/internal/tenant"
 )
 
-const dataCustomOptionsKey = "kengine.ata"
-const secureDataCustomOptionsKey = "kengine.ecureData"
+const dataCustomOptionsKey = "grafanaData"
+const secureDataCustomOptionsKey = "grafanaSecureData"
 
-// User represents a Khulnasoft user.
+// User represents a Grafana user.
 type User struct {
 	Login string
 	Name  string
@@ -24,14 +24,14 @@ type User struct {
 
 // AppInstanceSettings represents settings for an app instance.
 //
-// In Khulnasoft an app instance is an app plugin of certain
-// type that have been configured and enabled in a Khulnasoft organization.
+// In Grafana an app instance is an app plugin of certain
+// type that have been configured and enabled in a Grafana organization.
 type AppInstanceSettings struct {
 	// JSONData repeats the properties at this level of the object (excluding DataSourceConfig), and also includes any
 	// custom properties associated with the plugin config instance.
 	JSONData json.RawMessage
 
-	// DecryptedSecureJSONData contains key,value pairs where the encrypted configuration plugin instance in Kengine
+	// DecryptedSecureJSONData contains key,value pairs where the encrypted configuration plugin instance in Grafana
 	// server have been decrypted before passing them to the plugin.
 	DecryptedSecureJSONData map[string]string
 
@@ -54,13 +54,13 @@ func (s *AppInstanceSettings) HTTPClientOptions(_ context.Context) (httpclient.O
 
 // DataSourceInstanceSettings represents settings for a data source instance.
 //
-// In Khulnasoft a data source instance is a data source plugin of certain
-// type that have been configured and created in a Khulnasoft organization.
+// In Grafana a data source instance is a data source plugin of certain
+// type that have been configured and created in a Grafana organization.
 type DataSourceInstanceSettings struct {
-	// ID is the Khulnasoft assigned numeric identifier of the the data source instance.
+	// ID is the Grafana assigned numeric identifier of the the data source instance.
 	ID int64
 
-	// UID is the Khulnasoft assigned string identifier of the the data source instance.
+	// UID is the Grafana assigned string identifier of the the data source instance.
 	UID string
 
 	// Type is the unique identifier of the plugin that the request is for.
@@ -73,7 +73,7 @@ type DataSourceInstanceSettings struct {
 	// URL is the configured URL of a data source instance (e.g. the URL of an API endpoint).
 	URL string
 
-	// User is a configured user for a data source instance. This is not a Khulnasoft user, rather an arbitrary string.
+	// User is a configured user for a data source instance. This is not a Grafana user, rather an arbitrary string.
 	User string
 
 	// Database is the configured database for a data source instance.
@@ -88,11 +88,11 @@ type DataSourceInstanceSettings struct {
 	// authentication to connect to whatever API it fetches data from).
 	BasicAuthUser string
 
-	// JSONData contains the raw DataSourceConfig as JSON as stored by Khulnasoft server. It repeats the properties in
+	// JSONData contains the raw DataSourceConfig as JSON as stored by Grafana server. It repeats the properties in
 	// this object and includes custom properties.
 	JSONData json.RawMessage
 
-	// DecryptedSecureJSONData contains key,value pairs where the encrypted configuration in Khulnasoft server have been
+	// DecryptedSecureJSONData contains key,value pairs where the encrypted configuration in Grafana server have been
 	// decrypted before passing them to the plugin.
 	DecryptedSecureJSONData map[string]string
 
@@ -124,7 +124,7 @@ func (s *DataSourceInstanceSettings) HTTPClientOptions(ctx context.Context) (htt
 
 	setCustomOptionsFromHTTPSettings(&opts, httpSettings)
 
-	cfg := KengineConfigFromContext(ctx)
+	cfg := GrafanaConfigFromContext(ctx)
 	proxy, err := cfg.proxy()
 	if err != nil {
 		return opts, err
@@ -138,9 +138,9 @@ func (s *DataSourceInstanceSettings) HTTPClientOptions(ctx context.Context) (htt
 }
 
 // PluginContext holds contextual information about a plugin request, such as
-// Khulnasoft organization, user and plugin instance settings.
+// Grafana organization, user and plugin instance settings.
 type PluginContext struct {
-	// OrgID is The Khulnasoft organization identifier the request originating from.
+	// OrgID is The Grafana organization identifier the request originating from.
 	OrgID int64
 
 	// PluginID is the unique identifier of the plugin that the request is for.
@@ -149,16 +149,16 @@ type PluginContext struct {
 	// PluginVersion is the version of the plugin that the request is for.
 	PluginVersion string
 
-	// User is the Khulnasoft user making the request.
+	// User is the Grafana user making the request.
 	//
-	// Will not be provided if Khulnasoft backend initiated the request,
-	// for example when request is coming from Khulnasoft Alerting.
+	// Will not be provided if Grafana backend initiated the request,
+	// for example when request is coming from Grafana Alerting.
 	User *User
 
 	// AppInstanceSettings is the configured app instance settings.
 	//
-	// In Khulnasoft an app instance is an app plugin of certain
-	// type that have been configured and enabled in a Khulnasoft organization.
+	// In Grafana an app instance is an app plugin of certain
+	// type that have been configured and enabled in a Grafana organization.
 	//
 	// Will only be set if request targeting an app instance.
 	AppInstanceSettings *AppInstanceSettings
@@ -166,17 +166,17 @@ type PluginContext struct {
 	// DataSourceConfig is the configured data source instance
 	// settings.
 	//
-	// In Khulnasoft a data source instance is a data source plugin of certain
-	// type that have been configured and created in a Khulnasoft organization.
+	// In Grafana a data source instance is a data source plugin of certain
+	// type that have been configured and created in a Grafana organization.
 	//
 	// Will only be set if request targeting a data source instance.
 	DataSourceInstanceSettings *DataSourceInstanceSettings
 
-	// KengineConfig is the configuration settings provided by Kengine.
-	KengineConfig *KengineCfg
+	// GrafanaConfig is the configuration settings provided by Grafana.
+	GrafanaConfig *GrafanaCfg
 
-	// UserAgent is the user agent of the Khulnasoft server that initiated the gRPC request.
-	// Will only be set if request is made from Khulnasoft v10.2.0 or later.
+	// UserAgent is the user agent of the Grafana server that initiated the gRPC request.
+	// Will only be set if request is made from Grafana v10.2.0 or later.
 	UserAgent *useragent.UserAgent
 }
 
@@ -252,6 +252,9 @@ func (s *DataSourceInstanceSettings) ProxyOptions(clientCfg *proxy.ClientCfg) (*
 		return nil, nil
 	}
 
+	opts.DatasourceName = s.Name
+	opts.DatasourceType = s.Type
+
 	opts.Auth = &proxy.AuthOptions{}
 	opts.Timeouts = &proxy.TimeoutOptions{}
 	if v, exists := dat["secureSocksProxyUsername"]; exists {
@@ -287,7 +290,7 @@ func (s *DataSourceInstanceSettings) ProxyOptions(clientCfg *proxy.ClientCfg) (*
 }
 
 func (s *DataSourceInstanceSettings) ProxyClient(ctx context.Context) (proxy.Client, error) {
-	cfg := KengineConfigFromContext(ctx)
+	cfg := GrafanaConfigFromContext(ctx)
 	p, err := cfg.proxy()
 	if err != nil {
 		return nil, err

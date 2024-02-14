@@ -85,7 +85,7 @@ func TestRoundTripper_RoundTrip(t *testing.T) {
 		{
 			name:    "should return matched response from HAR file",
 			rt:      &mock.RoundTripper{HARFileName: "testdata/example.har"},
-			req:     exampleRequest(http.MethodGet, "https://khulnasoft.com/api/plugins/two"),
+			req:     exampleRequest(http.MethodGet, "https://grafana.com/api/plugins/two"),
 			wantErr: errors.New("no matched request found in HAR file"),
 			test: func(t *testing.T, res *http.Response) {
 				t.Helper()
@@ -98,13 +98,13 @@ func TestRoundTripper_RoundTrip(t *testing.T) {
 		{
 			name:    "should throw error when no response matched from HAR file",
 			rt:      &mock.RoundTripper{HARFileName: "testdata/example.har"},
-			req:     exampleRequest(http.MethodGet, "https://khulnasoft.com/api/plugins"),
+			req:     exampleRequest(http.MethodGet, "https://grafana.com/api/plugins"),
 			wantErr: errors.New("no matched request found in HAR file"),
 		},
 		{
 			name: "should throw error when authentication is expected",
 			rt:   &mock.RoundTripper{BasicAuthEnabled: true, BasicAuthUser: "foo", BasicAuthPassword: "bar"},
-			req:  exampleRequest(http.MethodGet, "https://khulnasoft.com/api/plugins"),
+			req:  exampleRequest(http.MethodGet, "https://grafana.com/api/plugins"),
 			test: func(t *testing.T, res *http.Response) {
 				t.Helper()
 				require.Equal(t, http.StatusUnauthorized, res.StatusCode)
@@ -113,7 +113,7 @@ func TestRoundTripper_RoundTrip(t *testing.T) {
 		{
 			name: "should not throw error when authentication is expected and details present",
 			rt:   &mock.RoundTripper{BasicAuthEnabled: true, BasicAuthUser: "foo", BasicAuthPassword: "bar"},
-			req:  exampleRequest(http.MethodGet, "https://foo:bar@khulnasoft.com/api/plugins"),
+			req:  exampleRequest(http.MethodGet, "https://foo:bar@grafana.com/api/plugins"),
 			test: func(t *testing.T, res *http.Response) {
 				t.Helper()
 				require.Equal(t, http.StatusOK, res.StatusCode)

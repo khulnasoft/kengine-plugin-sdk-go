@@ -35,38 +35,38 @@ message User {
 }
 
 message PluginContext {
-  // The Khulnasoft organization id the request originates from.
+  // The Grafana organization id the request originates from.
   int64 orgId = 1;
 
   // The unique identifier of the plugin the request is targeted for.
   string pluginId = 2;
 
-  // The Khulnasoft user the request originates from.
+  // The Grafana user the request originates from.
   //
-  // Will not be provided if Khulnasoft backend initiated the request.
+  // Will not be provided if Grafana backend initiated the request.
   User user = 3;
 
   // App plugin instance settings is the configured app instance settings.
-  // In Khulnasoft an app instance is an enabled app plugin in a
-  // Khulnasoft organization.
+  // In Grafana an app instance is an enabled app plugin in a
+  // Grafana organization.
   //
   // Will only be set if request targeting an app instance.
   AppInstanceSettings appInstanceSettings = 4;
 
   // Data source instance settings is the configured data source instance
-  // settings. In Khulnasoft a data source instance is a created data source
-  // in a Khulnasoft organization.
+  // settings. In Grafana a data source instance is a created data source
+  // in a Grafana organization.
   //
   // Will only be set if request targeting a data source instance.
   DataSourceInstanceSettings dataSourceInstanceSettings = 5;
 
-  // The khulnasoft configuration as a map of key/value pairs.
-  map<string,string> kengineConfig = 6;
+  // The grafana configuration as a map of key/value pairs.
+  map<string,string> grafanaConfig = 6;
 
   // The version of the plugin the request is targeted for.
   string pluginVersion = 7;
 
-  // The user agent of the Khulnasoft server that initiated the gRPC request.
+  // The user agent of the Grafana server that initiated the gRPC request.
   string userAgent = 8;
 }
 
@@ -207,13 +207,13 @@ message CheckHealthResponse {
 service Stream {
   // SubscribeStream called when a user tries to subscribe to a plugin/datasource
   // managed channel path – thus plugin can check subscribe permissions and communicate
-  // options with Khulnasoft Core. When the first subscriber joins a channel, RunStream
+  // options with Grafana Core. When the first subscriber joins a channel, RunStream
   // will be called.
   rpc SubscribeStream(SubscribeStreamRequest) returns (SubscribeStreamResponse);
 
-  // RunStream will be initiated by Khulnasoft to consume a stream. RunStream will be
+  // RunStream will be initiated by Grafana to consume a stream. RunStream will be
   // called once for the first client successfully subscribed to a channel path.
-  // When Khulnasoft detects that there are no longer any subscribers inside a channel,
+  // When Grafana detects that there are no longer any subscribers inside a channel,
   // the call will be terminated until next active subscriber appears. Call termination
   // can happen with a delay.
   rpc RunStream(RunStreamRequest) returns (stream StreamPacket);
@@ -270,7 +270,7 @@ message PublishStreamResponse {
 
   // JSON-encoded data to publish into a channel. This can be
   // unmodified data from a PublishRequest or any modified data.
-  // If empty data returned here then Khulnasoft won't publish data
+  // If empty data returned here then Grafana won't publish data
   // to a channel itself but will return a successful result to a
   // client (supposing plugin published data to a channel itself).
   bytes data = 2;

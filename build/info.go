@@ -16,7 +16,7 @@ var buildInfoJSON string
 // exposed for testing.
 var now = time.Now
 
-// Info See also PluginBuildInfo in https://github.com/khulnasoft/khulnasoft/blob/master/pkg/plugins/models.go
+// Info See also PluginBuildInfo in https://github.com/grafana/grafana/blob/master/pkg/plugins/models.go
 type Info struct {
 	Time     int64  `json:"time,omitempty"`
 	PluginID string `json:"pluginID,omitempty"`
@@ -29,7 +29,7 @@ type Info struct {
 }
 
 // this will append build flags -- the keys are picked to match existing
-// khulnasoft build flags from bra
+// grafana build flags from bra
 func (v Info) appendFlags(flags map[string]string) {
 	if v.PluginID != "" {
 		flags["main.pluginID"] = v.PluginID

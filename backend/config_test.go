@@ -13,10 +13,10 @@ import (
 )
 
 func TestConfig(t *testing.T) {
-	t.Run("KengineConfigFromContext", func(t *testing.T) {
+	t.Run("GrafanaConfigFromContext", func(t *testing.T) {
 		tcs := []struct {
 			name                   string
-			cfg                    *KengineCfg
+			cfg                    *GrafanaCfg
 			expectedFeatureToggles FeatureToggles
 			expectedProxy          Proxy
 		}{
@@ -28,25 +28,25 @@ func TestConfig(t *testing.T) {
 			},
 			{
 				name:                   "empty config",
-				cfg:                    &KengineCfg{},
+				cfg:                    &GrafanaCfg{},
 				expectedFeatureToggles: FeatureToggles{},
 				expectedProxy:          Proxy{},
 			},
 			{
 				name:                   "nil config map",
-				cfg:                    NewKengineCfg(nil),
+				cfg:                    NewGrafanaCfg(nil),
 				expectedFeatureToggles: FeatureToggles{},
 				expectedProxy:          Proxy{},
 			},
 			{
 				name:                   "empty config map",
-				cfg:                    NewKengineCfg(make(map[string]string)),
+				cfg:                    NewGrafanaCfg(make(map[string]string)),
 				expectedFeatureToggles: FeatureToggles{},
 				expectedProxy:          Proxy{},
 			},
 			{
 				name: "feature toggles and proxy enabled",
-				cfg: NewKengineCfg(map[string]string{
+				cfg: NewGrafanaCfg(map[string]string{
 					featuretoggles.EnabledFeatures:           "TestFeature",
 					proxy.PluginSecureSocksProxyEnabled:      "true",
 					proxy.PluginSecureSocksProxyProxyAddress: "localhost:1234",
@@ -72,7 +72,7 @@ func TestConfig(t *testing.T) {
 			},
 			{
 				name: "feature toggles enabled and proxy disabled",
-				cfg: NewKengineCfg(map[string]string{
+				cfg: NewGrafanaCfg(map[string]string{
 					featuretoggles.EnabledFeatures:           "TestFeature",
 					proxy.PluginSecureSocksProxyEnabled:      "false",
 					proxy.PluginSecureSocksProxyProxyAddress: "localhost:1234",
@@ -90,7 +90,7 @@ func TestConfig(t *testing.T) {
 			},
 			{
 				name: "feature toggles disabled and proxy enabled",
-				cfg: NewKengineCfg(map[string]string{
+				cfg: NewGrafanaCfg(map[string]string{
 					featuretoggles.EnabledFeatures:           "",
 					proxy.PluginSecureSocksProxyEnabled:      "true",
 					proxy.PluginSecureSocksProxyProxyAddress: "localhost:1234",
@@ -112,7 +112,7 @@ func TestConfig(t *testing.T) {
 			},
 			{
 				name: "feature toggles disabled and insecure proxy enabled",
-				cfg: NewKengineCfg(map[string]string{
+				cfg: NewGrafanaCfg(map[string]string{
 					featuretoggles.EnabledFeatures:            "",
 					proxy.PluginSecureSocksProxyEnabled:       "true",
 					proxy.PluginSecureSocksProxyProxyAddress:  "localhost:1234",
@@ -137,8 +137,8 @@ func TestConfig(t *testing.T) {
 		}
 
 		for _, tc := range tcs {
-			ctx := WithKengineConfig(context.Background(), tc.cfg)
-			cfg := KengineConfigFromContext(ctx)
+			ctx := WithGrafanaConfig(context.Background(), tc.cfg)
+			cfg := GrafanaConfigFromContext(ctx)
 
 			require.Equal(t, tc.expectedFeatureToggles, cfg.FeatureToggles())
 			proxy, err := cfg.proxy()
@@ -151,7 +151,7 @@ func TestConfig(t *testing.T) {
 
 func TestAppURL(t *testing.T) {
 	t.Run("it should return the configured app URL", func(t *testing.T) {
-		cfg := NewKengineCfg(map[string]string{
+		cfg := NewGrafanaCfg(map[string]string{
 			AppURL: "http://localhost:3000",
 		})
 		url, err := cfg.AppURL()
@@ -160,7 +160,7 @@ func TestAppURL(t *testing.T) {
 	})
 
 	t.Run("it should return an error if the app URL is missing", func(t *testing.T) {
-		cfg := NewKengineCfg(map[string]string{})
+		cfg := NewGrafanaCfg(map[string]string{})
 		_, err := cfg.AppURL()
 		require.Error(t, err)
 	})
@@ -173,14 +173,14 @@ func TestUserAgentFromContext(t *testing.T) {
 	ctx := WithUserAgent(context.Background(), ua)
 	result := UserAgentFromContext(ctx)
 
-	require.Equal(t, "10.0.0", result.KengineVersion())
-	require.Equal(t, "Khulnasoft/10.0.0 (test; test)", result.String())
+	require.Equal(t, "10.0.0", result.GrafanaVersion())
+	require.Equal(t, "Grafana/10.0.0 (test; test)", result.String())
 }
 
 func TestUserAgentFromContext_NoUserAgent(t *testing.T) {
 	ctx := context.Background()
 
 	result := UserAgentFromContext(ctx)
-	require.Equal(t, "0.0.0", result.KengineVersion())
-	require.Equal(t, "Khulnasoft/0.0.0 (unknown; unknown)", result.String())
+	require.Equal(t, "0.0.0", result.GrafanaVersion())
+	require.Equal(t, "Grafana/0.0.0 (unknown; unknown)", result.String())
 }

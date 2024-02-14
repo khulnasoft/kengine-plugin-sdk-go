@@ -52,7 +52,7 @@ type ServeOpts struct {
 	QueryDataHandler QueryDataHandler
 
 	// StreamHandler handler for streaming queries.
-	// This is EXPERIMENTAL and is a subject to change till Khulnasoft 8.
+	// This is EXPERIMENTAL and is a subject to change till Grafana 8.
 	StreamHandler StreamHandler
 
 	// GRPCSettings settings for gPRC.
@@ -155,7 +155,7 @@ func GracefulStandaloneServe(dsopts ServeOpts, info standalone.ServerSettings) e
 		if err := standalone.CleanupStandalonePIDFile(info); err != nil {
 			log.DefaultLogger.Error("Error while cleaning up standalone pid file", "error", err)
 		}
-		// Kill the dummy locator so Khulnasoft reloads the plugin
+		// Kill the dummy locator so Grafana reloads the plugin
 		standalone.FindAndKillCurrentPlugin(info.Dir)
 	}()
 
@@ -252,7 +252,7 @@ func Manage(pluginID string, serveOpts ServeOpts) error {
 	}
 
 	if s, enabled := standalone.ClientModeEnabled(pluginID); enabled {
-		// Khulnasoft is trying to run the dummy plugin locator to connect to the standalone GRPC server (separate process)
+		// Grafana is trying to run the dummy plugin locator to connect to the standalone GRPC server (separate process)
 		Logger.Debug("Running dummy plugin locator", "addr", s.TargetAddress, "pid", strconv.Itoa(s.TargetPID))
 		standalone.RunDummyPluginLocator(s.TargetAddress)
 		return nil

@@ -20,7 +20,7 @@ type QueryDataHandler interface {
 	//
 	// The Frames' RefID property, when it is an empty string, will be automatically set to
 	// the RefID in QueryDataResponse.Responses map. This is done before the QueryDataResponse is
-	// sent to Kengine. Therefore one does not need to be set that property on frames when using this method.
+	// sent to Grafana. Therefore one does not need to be set that property on frames when using this method.
 	QueryData(ctx context.Context, req *QueryDataRequest) (*QueryDataResponse, error)
 }
 

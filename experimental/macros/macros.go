@@ -24,7 +24,7 @@ type macroFunc func(string, []string) (string, error)
 
 func getMatches(macroName, input string) ([][]string, error) {
 	macroRegex := fmt.Sprintf("\\$__%s\\b(?:\\((.*?)\\))?", macroName) // regular macro syntax
-	if strings.HasPrefix(macroName, "$$") {                            // prefix $$ is used to denote macro from frontend or khulnasoft global variable
+	if strings.HasPrefix(macroName, "$$") {                            // prefix $$ is used to denote macro from frontend or grafana global variable
 		macroRegex = fmt.Sprintf("\\${__%s:?(.*?)}", strings.TrimPrefix(macroName, "$$"))
 	}
 	rgx, err := regexp.Compile(macroRegex)

@@ -1,9 +1,8 @@
-# Checks if the current update to go.mod is compatible with Kengine.
+# Checks if the current update to go.mod is compatible with Grafana.
 
-name: Detect breaking change with Kengine
+name: Detect breaking change with Grafana
 
 on:
-  workflow_dispatch:
   pull_request:
     paths:
       - 'go.mod'
@@ -21,34 +20,34 @@ jobs:
         path: './kengine-plugin-sdk-go'
     - uses: actions/checkout@v4
       with:
-        repository: 'khulnasoft/kengine'
-        path: './kengine'
+        repository: 'grafana/grafana'
+        path: './grafana'
     - uses: actions/setup-go@v5
       with:
         cache: false
         check-latest: true
         go-version-file: 'kengine-plugin-sdk-go/go.mod'
 
-    - name: Check if branch exists in Kengine
-      working-directory: './kengine'
+    - name: Check if branch exists in Grafana
+      working-directory: './grafana'
       run: |
         if git ls-remote --heads --quiet --exit-code origin ${{ github.head_ref }}
         then
-          echo "Found branch ${{ github.head_ref }} in Kengine"
+          echo "Found branch ${{ github.head_ref }} in Grafana"
           git fetch origin ${{ github.head_ref }}
           git checkout ${{ github.head_ref }}
         else
-          echo "Branch ${{ github.head_ref }} not found in Kengine"
+          echo "Branch ${{ github.head_ref }} not found in Grafana"
         fi
 
     - name: Link sdk
-      working-directory: './kengine'
+      working-directory: './grafana'
       run: echo 'replace github.com/khulnasoft/kengine-plugin-sdk-go => ../kengine-plugin-sdk-go' >> go.mod
 
     - name: Automatic updates
-      working-directory: './kengine'
+      working-directory: './grafana'
       run: go mod tidy
 
-    - name: Build Kengine
-      working-directory: './kengine'
+    - name: Build Grafana
+      working-directory: './grafana'
       run: make build-go

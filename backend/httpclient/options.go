@@ -69,7 +69,7 @@ type Options struct {
 	// included in backend.QueryDataRequest, backend.CallResourceRequest,
 	// backend.CheckHealthRequest, e.g. based on if Allowed cookies or
 	// Forward OAuth Identity is configured for the datasource or any
-	// other forwarded HTTP header from Kengine.
+	// other forwarded HTTP header from Grafana.
 	ForwardHTTPHeaders bool
 }
 

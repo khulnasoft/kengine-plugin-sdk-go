@@ -173,7 +173,7 @@ func TestInterpolate(t *testing.T) {
 		{
 			input:  "select * from foo where $__f > $__g",
 			output: "select * from foo where f(1) > g(1)",
-			name:   "don't consume args after a space (see https://github.com/khulnasoft/sqlds/issues/82)",
+			name:   "don't consume args after a space (see https://github.com/grafana/sqlds/issues/82)",
 		},
 		{
 			input:  "select * from foo where $__num*(table.a + table.b) > 1000000",

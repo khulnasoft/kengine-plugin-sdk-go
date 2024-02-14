@@ -1,1 +1,1 @@
-Repo Moved to [khulnasoft/dataplane/docs/contracts](https://github.com/khulnasoft/dataplane/tree/main/docs/contract). View at https://khulnasoft.github.io/dataplane/contract
+Repo Moved to [grafana/dataplane/docs/contracts](https://github.com/grafana/dataplane/tree/main/docs/contract). View at https://grafana.github.io/dataplane/contract

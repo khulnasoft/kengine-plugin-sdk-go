@@ -65,7 +65,7 @@ func ClientModeEnabled(pluginID string) (ClientSettings, bool) {
 	return s, true
 }
 
-// RunDummyPluginLocator runs the standalone server locator that Khulnasoft uses to connect to the standalone GRPC server.
+// RunDummyPluginLocator runs the standalone server locator that Grafana uses to connect to the standalone GRPC server.
 func RunDummyPluginLocator(address string) {
 	fmt.Printf("1|2|tcp|%s|grpc\n", address)
 	t := time.NewTicker(time.Second * 10)
@@ -238,7 +238,7 @@ func getFreePort() (int, error) {
 	return l.Addr().(*net.TCPAddr).Port, nil
 }
 
-// FindAndKillCurrentPlugin kills the currently registered plugin, causing Khulnasoft to restart it
+// FindAndKillCurrentPlugin kills the currently registered plugin, causing Grafana to restart it
 // and connect to our new host.
 func FindAndKillCurrentPlugin(dir string) {
 	defer func() {

@@ -26,8 +26,8 @@ func NewInstanceManager(fn InstanceFactoryFunc) instancemgmt.InstanceManager {
 //
 // The instance provider is responsible for providing cache keys for application instances,
 // creating new instances when needed and invalidating cached instances when they have been
-// updated in Kengine.
-// Cache key is based on the app plugin identifier, and the numeric Khulnasoft organization ID.
+// updated in Grafana.
+// Cache key is based on the app plugin identifier, and the numeric Grafana organization ID.
 // If fn is nil, NewInstanceProvider panics.
 func NewInstanceProvider(fn InstanceFactoryFunc) instancemgmt.InstanceProvider {
 	if fn == nil {
@@ -49,7 +49,7 @@ func (ip *instanceProvider) GetKey(ctx context.Context, pluginContext backend.Pl
 	}
 
 	// The instance key generated for app plugins should include both plugin ID, and the OrgID, since for a single
-	// Khulnasoft instance there might be different orgs using the same plugin.
+	// Grafana instance there might be different orgs using the same plugin.
 	defaultKey := fmt.Sprintf("%s#%v", pluginContext.PluginID, pluginContext.OrgID)
 	if tID := tenant.IDFromContext(ctx); tID != "" {
 		return fmt.Sprintf("%s#%s", tID, defaultKey), nil
@@ -59,8 +59,8 @@ func (ip *instanceProvider) GetKey(ctx context.Context, pluginContext backend.Pl
 }
 
 func (ip *instanceProvider) NeedsUpdate(_ context.Context, pluginContext backend.PluginContext, cachedInstance instancemgmt.CachedInstance) bool {
-	curConfig := pluginContext.KengineConfig
-	cachedConfig := cachedInstance.PluginContext.KengineConfig
+	curConfig := pluginContext.GrafanaConfig
+	cachedConfig := cachedInstance.PluginContext.GrafanaConfig
 	configUpdated := !cachedConfig.Equal(curConfig)
 
 	cachedAppSettings := cachedInstance.PluginContext.AppInstanceSettings

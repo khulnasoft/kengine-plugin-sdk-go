@@ -16,17 +16,17 @@ trigger:
 
 steps:
 - name: build
-  image: khulnasoft/kengine-plugin-ci:1.9.5
+  image: grafana/grafana-plugin-ci:1.9.5
   commands:
   - mage -v build
 
 - name: lint
-  image: khulnasoft/kengine-plugin-ci:1.9.5
+  image: grafana/grafana-plugin-ci:1.9.5
   commands:
   - mage -v lint
 
 - name: test
-  image: khulnasoft/kengine-plugin-ci:1.9.5
+  image: grafana/grafana-plugin-ci:1.9.5
   commands:
   # -race requires cgo + a C compiler
   - apt update
@@ -49,17 +49,17 @@ trigger:
 
 steps:
 - name: build
-  image: khulnasoft/kengine-plugin-ci:1.9.5
+  image: grafana/grafana-plugin-ci:1.9.5
   commands:
   - mage -v build
 
 - name: lint
-  image: khulnasoft/kengine-plugin-ci:1.9.5
+  image: grafana/grafana-plugin-ci:1.9.5
   commands:
   - mage -v lint
 
 - name: test
-  image: khulnasoft/kengine-plugin-ci:1.9.5
+  image: grafana/grafana-plugin-ci:1.9.5
   commands:
   # -race requires cgo + a C compiler
   - apt update

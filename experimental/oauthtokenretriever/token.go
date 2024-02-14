@@ -76,11 +76,11 @@ func (t *tokenRetriever) OnBehalfOfUser(ctx context.Context, userID string) (str
 }
 
 func New() (TokenRetriever, error) {
-	// The Khulnasoft URL is required to obtain tokens later on
-	kengine.ppURL := strings.TrimRight(os.Getenv(backend.AppURL), "/")
-	if kengine.ppURL == "" {
+	// The Grafana URL is required to obtain tokens later on
+	grafanaAppURL := strings.TrimRight(os.Getenv(backend.AppURL), "/")
+	if grafanaAppURL == "" {
 		// For debugging purposes only
-		kengine.ppURL = "http://localhost:3000"
+		grafanaAppURL = "http://localhost:3000"
 	}
 
 	clientID := os.Getenv(AppClientID)
@@ -108,7 +108,7 @@ func New() (TokenRetriever, error) {
 		conf: &clientcredentials.Config{
 			ClientID:     clientID,
 			ClientSecret: clientSecret,
-			TokenURL:     kengine.ppURL + "/oauth2/token",
+			TokenURL:     grafanaAppURL + "/oauth2/token",
 			AuthStyle:    oauth2.AuthStyleInParams,
 			Scopes:       []string{"profile", "email", "entitlements"},
 		},

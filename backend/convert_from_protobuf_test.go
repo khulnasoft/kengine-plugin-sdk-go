@@ -143,9 +143,9 @@ var protoDataSourceInstanceSettings = &pluginv2.DataSourceInstanceSettings{
 	Id:                      2,
 	Uid:                     "uid 2",
 	Name:                    "bestData",
-	Url:                     "http://khulnasoft.com",
+	Url:                     "http://grafana.com",
 	User:                    "aUser",
-	Database:                "kengine.,
+	Database:                "grafana",
 	BasicAuthEnabled:        true,
 	BasicAuthUser:           "anotherUser",
 	JsonData:                []byte(`{ "foo": "gpp"`),
@@ -205,10 +205,10 @@ var protoPluginContext = &pluginv2.PluginContext{
 	},
 	AppInstanceSettings:        protoAppInstanceSettings,
 	DataSourceInstanceSettings: protoDataSourceInstanceSettings,
-	KengineConfig: map[string]string{
+	GrafanaConfig: map[string]string{
 		"foo": "bar",
 	},
-	UserAgent: "Khulnasoft/10.0.0 (linux; amd64)",
+	UserAgent: "Grafana/10.0.0 (linux; amd64)",
 }
 
 func TestConvertFromProtobufPluginContext(t *testing.T) {
@@ -265,7 +265,7 @@ func TestConvertFromProtobufPluginContext(t *testing.T) {
 	requireCounter.Equal(t, time.Unix(0, 86400*2*1e9), sdkCtx.DataSourceInstanceSettings.Updated)
 	requireCounter.Equal(t, protoCtx.UserAgent, sdkCtx.UserAgent.String())
 
-	requireCounter.Equal(t, protoCtx.KengineConfig, sdkCtx.KengineConfig.config)
+	requireCounter.Equal(t, protoCtx.GrafanaConfig, sdkCtx.GrafanaConfig.config)
 
 	require.Equal(t, requireCounter.Count, sdkWalker.FieldCount-3, "untested fields in conversion") // -3 Struct Fields
 }
@@ -434,7 +434,7 @@ func TestConvertFromProtobufQueryDataRequest(t *testing.T) {
 
 	// -7 is:
 	// PluginContext, .User, .AppInstanceSettings, .DataSourceInstanceSettings
-	// DataQuery, .TimeRange, .KengineConfig
+	// DataQuery, .TimeRange, .GrafanaConfig
 	//
 	//
 	require.Equal(t, requireCounter.Count, sdkWalker.FieldCount-7, "untested fields in conversion") // -6 Struct Fields

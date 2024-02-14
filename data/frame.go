@@ -1,12 +1,12 @@
-// Package data provides data structures that Khulnasoft recognizes.
+// Package data provides data structures that Grafana recognizes.
 //
-// The Frame object represents a Khulnasoft Dataframe which can represent data such as tables
+// The Frame object represents a Grafana Dataframe which can represent data such as tables
 // and time series.
 //
 // Frames can be encoded using Apache Arrow (https://arrow.apache.org/) for transmission.
 //
-// The corresponding Khulnasoft frontend package the @khulnasoft/data package
-// (https://github.com/khulnasoft/khulnasoft/tree/master/packages/kengine-data).
+// The corresponding Grafana frontend package the @grafana/data package
+// (https://github.com/grafana/grafana/tree/master/packages/grafana-data).
 package data
 
 import (
@@ -27,12 +27,12 @@ import (
 //
 // Each Field is well typed by its FieldType and supports optional Labels.
 //
-// A Frame is a general data container for Kengine. A Frame can be table data
+// A Frame is a general data container for Grafana. A Frame can be table data
 // or time series data depending on its content and field types.
 //
 //swagger:model
 type Frame struct {
-	// Name is used in some Khulnasoft visualizations.
+	// Name is used in some Grafana visualizations.
 	Name string
 
 	// Fields are the columns of a frame.

@@ -1,6 +1,6 @@
 # Developer guide
 
-This guide helps you get started developing Khulnasoft Plugin SDK for Go.
+This guide helps you get started developing Grafana Plugin SDK for Go.
 
 ## Tooling
 

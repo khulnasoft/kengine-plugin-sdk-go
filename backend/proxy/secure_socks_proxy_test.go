@@ -311,8 +311,8 @@ func setupTestSecureSocksProxySettings(t *testing.T) *ClientCfg {
 	ca := &x509.Certificate{
 		SerialNumber: big.NewInt(2019),
 		Subject: pkix.Name{
-			Organization: []string{"Khulnasoft Labs"},
-			CommonName:   "Kengine.,
+			Organization: []string{"Grafana Labs"},
+			CommonName:   "Grafana",
 		},
 		NotBefore:             time.Now(),
 		NotAfter:              time.Now().AddDate(10, 0, 0),
@@ -340,8 +340,8 @@ func setupTestSecureSocksProxySettings(t *testing.T) *ClientCfg {
 	cert := &x509.Certificate{
 		SerialNumber: big.NewInt(2019),
 		Subject: pkix.Name{
-			Organization: []string{"Khulnasoft Labs"},
-			CommonName:   "Kengine.,
+			Organization: []string{"Grafana Labs"},
+			CommonName:   "Grafana",
 		},
 		NotBefore:    time.Now(),
 		NotAfter:     time.Now().AddDate(10, 0, 0),

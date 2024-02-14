@@ -65,7 +65,7 @@ func (s *HAR) Init() {
 		Entries: make([]*har.Entry, 0),
 		Pages: []*har.Page{{
 			StartedDateTime: s.currentTime().Format(time.RFC3339),
-			Title:           "Khulnasoft E2E",
+			Title:           "Grafana E2E",
 			ID:              s.newUUID(),
 			PageTimings:     &har.PageTimings{},
 		}},

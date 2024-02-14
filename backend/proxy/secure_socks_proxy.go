@@ -48,7 +48,7 @@ var (
 var (
 	socksUnknownError           = regexp.MustCompile(`unknown code: (\d+)`)
 	secureSocksRequestsDuration = promauto.NewHistogramVec(prometheus.HistogramOpts{
-		Namespace: "kengine.,
+		Namespace: "grafana",
 		Name:      "secure_socks_requests_duration",
 		Help:      "Duration of requests to the secure socks proxy",
 	}, []string{"code", "datasource", "datasource_type"})
@@ -83,20 +83,20 @@ type cfgProxyWrapper struct {
 	opts *Options
 }
 
-// SecureSocksProxyEnabled checks if the Khulnasoft instance allows the secure socks proxy to be used
+// SecureSocksProxyEnabled checks if the Grafana instance allows the secure socks proxy to be used
 // and the datasource options specify to use the proxy
 func (p *cfgProxyWrapper) SecureSocksProxyEnabled() bool {
-	// it cannot be enabled if it's not enabled on Kengine
+	// it cannot be enabled if it's not enabled on Grafana
 	if p.opts == nil {
 		return false
 	}
 
-	// if it's enabled on Kengine, check if the datasource is using it
+	// if it's enabled on Grafana, check if the datasource is using it
 	return (p.opts != nil) && p.opts.Enabled
 }
 
 // ConfigureSecureSocksHTTPProxy takes a http.DefaultTransport and wraps it in a socks5 proxy with TLS
-// if it is enabled on the datasource and the khulnasoft instance
+// if it is enabled on the datasource and the grafana instance
 func (p *cfgProxyWrapper) ConfigureSecureSocksHTTPProxy(transport *http.Transport) error {
 	if !p.SecureSocksProxyEnabled() {
 		return nil
@@ -195,7 +195,7 @@ func (p *cfgProxyWrapper) getTLSDialer() (*tls.Dialer, error) {
 	}, nil
 }
 
-// getConfigFromEnv gets the needed proxy information from the env variables that Khulnasoft set with the values from the config ini
+// getConfigFromEnv gets the needed proxy information from the env variables that Grafana set with the values from the config ini
 func getConfigFromEnv() *ClientCfg {
 	if value, ok := os.LookupEnv(PluginSecureSocksProxyEnabled); ok {
 		enabled, err := strconv.ParseBool(value)

@@ -36,7 +36,7 @@ func (a *resourceSDKAdapter) CallResource(protoReq *pluginv2.CallResourceRequest
 
 	ctx := protoSrv.Context()
 	ctx = propagateTenantIDIfPresent(ctx)
-	ctx = WithKengineConfig(ctx, NewKengineCfg(protoReq.PluginContext.KengineConfig))
+	ctx = WithGrafanaConfig(ctx, NewGrafanaCfg(protoReq.PluginContext.GrafanaConfig))
 	parsedReq := FromProto().CallResourceRequest(protoReq)
 	ctx = withHeaderMiddleware(ctx, parsedReq.GetHTTPHeaders())
 	ctx = withContextualLogAttributes(ctx, parsedReq.PluginContext, endpointCallResource)

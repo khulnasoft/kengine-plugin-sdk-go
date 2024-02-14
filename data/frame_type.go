@@ -21,14 +21,14 @@ const FrameTypeUnknown FrameType = ""
 
 // FrameTypeTimeSeriesWide uses labels on fields to define dimensions and is documented in [Time Series Wide Format in the Data Plane Contract]. There is additional documentation in the [Developer Data Frame Documentation on the Wide Format].
 //
-// [Time Series Wide Format in the Data Plane Contract]: https://khulnasoft.github.io/dataplane/contract/timeseries#time-series-wide-format-timeserieswide
-// [Developer Data Frame Documentation on the Wide Format]: https://khulnasoft.com/docs/khulnasoft/latest/developers/plugins/data-frames/#wide-format
+// [Time Series Wide Format in the Data Plane Contract]: https://grafana.github.io/dataplane/contract/timeseries#time-series-wide-format-timeserieswide
+// [Developer Data Frame Documentation on the Wide Format]: https://grafana.com/docs/grafana/latest/developers/plugins/data-frames/#wide-format
 const FrameTypeTimeSeriesWide FrameType = "timeseries-wide"
 
 // FrameTypeTimeSeriesLong uses string fields to define dimensions and is documented in [Time Series Long Format in the Data Plane Contract]. There is additional documentation in the [Developer Data Frame Documentation on Long Format].
 //
-// [Time Series Long Format in the Data Plane Contract]: https://khulnasoft.github.io/dataplane/contract/timeseries#time-series-long-format-timeserieslong-sql-like
-// [Developer Data Frame Documentation on Long Format]: https://khulnasoft.com/docs/khulnasoft/latest/developers/plugins/data-frames/#long-format
+// [Time Series Long Format in the Data Plane Contract]: https://grafana.github.io/dataplane/contract/timeseries#time-series-long-format-timeserieslong-sql-like
+// [Developer Data Frame Documentation on Long Format]: https://grafana.com/docs/grafana/latest/developers/plugins/data-frames/#long-format
 const FrameTypeTimeSeriesLong FrameType = "timeseries-long"
 
 // FrameTypeTimeSeriesMany is the same as "Wide" with exactly one numeric value field.
@@ -39,7 +39,7 @@ const FrameTypeTimeSeriesMany FrameType = "timeseries-many"
 // FrameTypeTimeSeriesMulti is documented in the [Time Series Multi Format in the Data Plane Contract].
 // This replaces FrameTypeTimeSeriesMany.
 //
-// [Time Series Multi Format in the Data Plane Contract]: https://khulnasoft.github.io/dataplane/contract/timeseries#time-series-multi-format-timeseriesmulti
+// [Time Series Multi Format in the Data Plane Contract]: https://grafana.github.io/dataplane/contract/timeseries#time-series-multi-format-timeseriesmulti
 const FrameTypeTimeSeriesMulti FrameType = "timeseries-multi"
 
 // FrameTypeDirectoryListing represents the items in a directory
@@ -57,22 +57,22 @@ const FrameTypeTable FrameType = "table"
 
 // FrameTypeNumericWide is documented in the [Numeric Wide Format in the Data Plane Contract].
 //
-// [Numeric Wide Format in the Data Plane Contract]: https://khulnasoft.github.io/dataplane/contract/numeric#numeric-wide-format-numericwide
+// [Numeric Wide Format in the Data Plane Contract]: https://grafana.github.io/dataplane/contract/numeric#numeric-wide-format-numericwide
 const FrameTypeNumericWide FrameType = "numeric-wide"
 
 // FrameTypeNumericMulti is documented in the [Numeric Multi Format in the Data Plane Contract].
 //
-// [Numeric Multi Format in the Data Plane Contract]: https://khulnasoft.github.io/dataplane/contract/numeric#numeric-multi-format-numericmulti
+// [Numeric Multi Format in the Data Plane Contract]: https://grafana.github.io/dataplane/contract/numeric#numeric-multi-format-numericmulti
 const FrameTypeNumericMulti FrameType = "numeric-multi"
 
 // FrameTypeNumericLong is documented in the [Numeric Long Format in the Data Plane Contract].
 //
-// [Numeric Long Format in the Data Plane Contract]: https://khulnasoft.github.io/dataplane/contract/numeric#numeric-long-format-numericlong-sql-table-like
+// [Numeric Long Format in the Data Plane Contract]: https://grafana.github.io/dataplane/contract/numeric#numeric-long-format-numericlong-sql-table-like
 const FrameTypeNumericLong FrameType = "numeric-long"
 
 // FrameTypeLogLines is documented in the Logs Format in the Data Plane Contract.
 //
-// [Log Lines Format in the Data Plane Contract]: https://khulnasoft.github.io/dataplane/contract/logs#loglines
+// [Log Lines Format in the Data Plane Contract]: https://grafana.github.io/dataplane/contract/logs#loglines
 const FrameTypeLogLines FrameType = "log-lines"
 
 // Soon?
@@ -161,19 +161,19 @@ func (p FrameType) Kind() FrameTypeKind {
 // FrameTypeKind represents the Kind a particular FrameType falls into. See [Kinds and Formats] in
 // the data plane documentation.
 //
-// [Kinds and Formats]: https://khulnasoft.github.io/dataplane/contract/#kinds-and-formats
+// [Kinds and Formats]: https://grafana.github.io/dataplane/contract/#kinds-and-formats
 type FrameTypeKind string
 
 const KindUnknown FrameTypeKind = ""
 
 // KindTimeSeries means the FrameType's Kind is time series. See [Data Plane Time Series Kind].
 //
-// [Data Plane Time Series Kind]: https://khulnasoft.github.io/dataplane/contract/timeseries
+// [Data Plane Time Series Kind]: https://grafana.github.io/dataplane/contract/timeseries
 const KindTimeSeries FrameTypeKind = "timeseries"
 
 // KindNumeric means the FrameType's Kind is numeric. See [Data Plane Numeric Kind].
 //
-// [Data Plane Numeric Kind]: https://khulnasoft.github.io/dataplane/contract/numeric
+// [Data Plane Numeric Kind]: https://grafana.github.io/dataplane/contract/numeric
 const KindNumeric FrameTypeKind = "numeric"
 
 // KindLogs means the FrameType's Kind is logs. See [Data Plane Logs Kind].
@@ -200,7 +200,7 @@ func (sv FrameTypeVersion) IsZero() bool {
 
 // ParseFrameTypeVersion parses a canonical representation of a
 // [FrameTypeVersion] (e.g. "0.0") from a string.
-// Taken from github.com/khulnasoft/thema
+// Taken from github.com/grafana/thema
 func ParseFrameTypeVersion(s string) (FrameTypeVersion, error) {
 	parts := strings.Split(s, ".")
 	if len(parts) != 2 {

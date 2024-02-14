@@ -10,7 +10,7 @@ import (
 
 var dateUnitPattern = regexp.MustCompile(`^(\d+)([dwMy])$`)
 
-// ParseInterval parses an interval with support for all units that Khulnasoft uses.
+// ParseInterval parses an interval with support for all units that Grafana uses.
 // An interval is relative to the current wall time.
 func ParseInterval(inp string) (time.Duration, error) {
 	dur, period, err := parse(inp)
@@ -40,7 +40,7 @@ func ParseInterval(inp string) (time.Duration, error) {
 	return 0, fmt.Errorf("invalid interval %q", inp)
 }
 
-// ParseDuration parses a duration with support for all units that Khulnasoft uses.
+// ParseDuration parses a duration with support for all units that Grafana uses.
 // Durations are independent of wall time.
 func ParseDuration(inp string) (time.Duration, error) {
 	dur, period, err := parse(inp)
@@ -87,7 +87,7 @@ func parse(inp string) (time.Duration, string, error) {
 	return time.Duration(num), string(result[2]), nil
 }
 
-// FormatInterval converts a duration into the units that Khulnasoft uses
+// FormatInterval converts a duration into the units that Grafana uses
 func FormatInterval(inter time.Duration) string {
 	year := time.Hour * 24 * 365
 	day := time.Hour * 24
@@ -150,7 +150,7 @@ func GetIntervalFrom(dsInterval, queryInterval string, queryIntervalMS int64, de
 }
 
 // ParseIntervalStringToTimeDuration converts a string representation of a expected (i.e. 1m30s) to time.Duration
-// this method copied from khulnasoft/khulnasoft/pkg/tsdb/intervalv2.go
+// this method copied from grafana/grafana/pkg/tsdb/intervalv2.go
 func ParseIntervalStringToTimeDuration(interval string) (time.Duration, error) {
 	formattedInterval := strings.Replace(strings.Replace(interval, "<", "", 1), ">", "", 1)
 	isPureNum, err := regexp.MatchString(`^\d+$`, formattedInterval)

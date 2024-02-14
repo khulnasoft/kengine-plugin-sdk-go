@@ -13,7 +13,7 @@ import (
 // protobuf go code to our SDK objects. This object exists to attach a collection
 // of conversion methods to.
 //
-// This is used internally by the SDK and inside Kengine-server, plugin authors should not
+// This is used internally by the SDK and inside Grafana-server, plugin authors should not
 // need this functionality.
 type ConvertFromProtobuf struct{}
 
@@ -92,7 +92,7 @@ func (f ConvertFromProtobuf) PluginContext(proto *pluginv2.PluginContext) Plugin
 		User:                       f.User(proto.User),
 		AppInstanceSettings:        f.AppInstanceSettings(proto.AppInstanceSettings),
 		DataSourceInstanceSettings: f.DataSourceInstanceSettings(proto.DataSourceInstanceSettings, proto.PluginId),
-		KengineConfig:              f.KengineConfig(proto.KengineConfig),
+		GrafanaConfig:              f.GrafanaConfig(proto.GrafanaConfig),
 		UserAgent:                  f.UserAgent(proto.UserAgent),
 	}
 }
@@ -294,6 +294,6 @@ func (f ConvertFromProtobuf) StreamPacket(protoReq *pluginv2.StreamPacket) *Stre
 	}
 }
 
-func (f ConvertFromProtobuf) KengineConfig(cfg map[string]string) *KengineCfg {
-	return NewKengineCfg(cfg)
+func (f ConvertFromProtobuf) GrafanaConfig(cfg map[string]string) *GrafanaCfg {
+	return NewGrafanaCfg(cfg)
 }

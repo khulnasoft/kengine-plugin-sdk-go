@@ -24,7 +24,7 @@ const minEcma6Int = -maxEcma6Int
 
 func goldenDF() *data.Frame {
 	nullableStringValuesFieldConfig := (&data.FieldConfig{
-		DisplayName: "Khulnasoft ❤️ (Previous should be heart emoji) 🦥 (Previous should be sloth emoji)",
+		DisplayName: "Grafana ❤️ (Previous should be heart emoji) 🦥 (Previous should be sloth emoji)",
 		Links: []data.DataLink{
 			{
 				Title:       "Donate - The Sloth Conservation Foundation",
@@ -45,7 +45,7 @@ func goldenDF() *data.Frame {
 			"Go Max",
 		}).SetConfig(&data.FieldConfig{}),
 		data.NewField("nullable_string_values", data.Labels{"aLabelKey": "aLabelValue", "bLabelKey": "bLabelValue"}, []*string{
-			stringPtr("Kengine.),
+			stringPtr("Grafana"),
 			stringPtr("❤️"),
 			nil,
 			stringPtr("🦥"),

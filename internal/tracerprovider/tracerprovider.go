@@ -65,7 +65,7 @@ func newOtelTracerProvider(exp tracesdk.SpanExporter, sampler tracesdk.Sampler, 
 }
 
 func newOtelExporter(address string) (tracesdk.SpanExporter, error) {
-	// Same as Khulnasoft core
+	// Same as Grafana core
 	client := otlptracegrpc.NewClient(otlptracegrpc.WithEndpoint(address), otlptracegrpc.WithInsecure())
 	return otlptrace.New(context.Background(), client)
 }

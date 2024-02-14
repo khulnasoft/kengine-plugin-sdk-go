@@ -1,8 +1,8 @@
 package grpcplugin
 
 import (
-	plugin "github.com/hashicorp/go-plugin"
 	"github.com/khulnasoft/kengine-plugin-sdk-go/backend/log"
+	plugin "github.com/hashicorp/go-plugin"
 	"google.golang.org/grpc"
 )
 

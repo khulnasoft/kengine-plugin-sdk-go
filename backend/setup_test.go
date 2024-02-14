@@ -78,7 +78,7 @@ func TestGetTracingConfig(t *testing.T) {
 					Param:       0.5,
 					Remote: tracerprovider.RemoteSamplerOptions{
 						URL:         "127.0.0.1:10001",
-						ServiceName: "kengine-plugin",
+						ServiceName: "grafana-plugin",
 					},
 				},
 			},

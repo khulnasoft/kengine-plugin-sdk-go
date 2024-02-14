@@ -1,4 +1,4 @@
-// Package log provides a logging interface to send logs from plugins to Khulnasoft server.
+// Package log provides a logging interface to send logs from plugins to Grafana server.
 package log
 
 import (
@@ -40,7 +40,7 @@ func NewWithLevel(level Level) Logger {
 		logger: hclog.New(&hclog.LoggerOptions{
 			// Use debug as level since anything less severe is suppressed.
 			Level: hclog.Level(level),
-			// Use JSON format to make the output in Khulnasoft format and work
+			// Use JSON format to make the output in Grafana format and work
 			// when using multiple arguments such as Debug("message", "key", "value").
 			JSONFormat: true,
 		}),

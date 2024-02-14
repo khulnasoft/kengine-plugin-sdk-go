@@ -8,7 +8,7 @@ import (
 	jsoniter "github.com/json-iterator/go"
 )
 
-// MappingType see https://github.com/khulnasoft/khulnasoft/blob/main/packages/kengine-data/src/types/valueMapping.ts
+// MappingType see https://github.com/grafana/grafana/blob/main/packages/grafana-data/src/types/valueMapping.ts
 type mappingType string
 
 const (

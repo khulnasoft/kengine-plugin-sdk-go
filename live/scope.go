@@ -1,8 +1,8 @@
 package live
 
 const (
-	// ScopeKhulnasoft contains builtin real-time features of Khulnasoft Core.
-	ScopeKhulnasoft = "kengine.
+	// ScopeGrafana contains builtin real-time features of Grafana Core.
+	ScopeGrafana = "grafana"
 	// ScopePlugin passes control to a plugin.
 	ScopePlugin = "plugin"
 	// ScopeDatasource passes control to a datasource plugin.

@@ -156,7 +156,7 @@ func (f *FrameJSONCache) MarshalJSON() ([]byte, error) {
 // useful for explicit control between the data and schema.
 // For standard json serialization use `json.Marshal(frame)`
 //
-// NOTE: the format should be considered experimental until khulnasoft 8 is released.
+// NOTE: the format should be considered experimental until grafana 8 is released.
 func FrameToJSON(frame *Frame, include FrameInclude) ([]byte, error) {
 	cfg := jsoniter.ConfigCompatibleWithStandardLibrary
 	stream := cfg.BorrowStream(nil)
@@ -177,7 +177,7 @@ func FrameToJSON(frame *Frame, include FrameInclude) ([]byte, error) {
 // useful for explicit control between the data and schema.
 // For standard json serialization use `json.Marshal(frame)`
 //
-// NOTE: the format should be considered experimental until khulnasoft 8 is released.
+// NOTE: the format should be considered experimental until grafana 8 is released.
 func FrameToJSONCache(frame *Frame) (FrameJSONCache, error) {
 	wrap := FrameJSONCache{}
 
@@ -1007,7 +1007,7 @@ func writeDataFrames(frames *Frames, stream *jsoniter.Stream) {
 }
 
 // ArrowBufferToJSON writes a frame to JSON
-// NOTE: the format should be considered experimental until khulnasoft 8 is released.
+// NOTE: the format should be considered experimental until grafana 8 is released.
 func ArrowBufferToJSON(b []byte, include FrameInclude) ([]byte, error) {
 	fB := filebuffer.New(b)
 	fR, err := ipc.NewFileReader(fB)
@@ -1029,7 +1029,7 @@ func ArrowBufferToJSON(b []byte, include FrameInclude) ([]byte, error) {
 }
 
 // ArrowToJSON writes a frame to JSON
-// NOTE: the format should be considered experimental until khulnasoft 8 is released.
+// NOTE: the format should be considered experimental until grafana 8 is released.
 func ArrowToJSON(record arrow.Record, include FrameInclude) ([]byte, error) {
 	cfg := jsoniter.ConfigCompatibleWithStandardLibrary
 	stream := cfg.BorrowStream(nil)

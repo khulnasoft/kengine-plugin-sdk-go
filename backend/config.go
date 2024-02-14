@@ -18,40 +18,40 @@ const (
 
 type configKey struct{}
 
-// KengineConfigFromContext returns Khulnasoft config from context.
-func KengineConfigFromContext(ctx context.Context) *KengineCfg {
+// GrafanaConfigFromContext returns Grafana config from context.
+func GrafanaConfigFromContext(ctx context.Context) *GrafanaCfg {
 	v := ctx.Value(configKey{})
 	if v == nil {
-		return NewKengineCfg(nil)
+		return NewGrafanaCfg(nil)
 	}
 
-	cfg := v.(*KengineCfg)
+	cfg := v.(*GrafanaCfg)
 	if cfg == nil {
-		return NewKengineCfg(nil)
+		return NewGrafanaCfg(nil)
 	}
 
 	return cfg
 }
 
-// WithKengineConfig injects supplied Khulnasoft config into context.
-func WithKengineConfig(ctx context.Context, cfg *KengineCfg) context.Context {
+// WithGrafanaConfig injects supplied Grafana config into context.
+func WithGrafanaConfig(ctx context.Context, cfg *GrafanaCfg) context.Context {
 	ctx = context.WithValue(ctx, configKey{}, cfg)
 	return ctx
 }
 
-type KengineCfg struct {
+type GrafanaCfg struct {
 	config map[string]string
 }
 
-func NewKengineCfg(cfg map[string]string) *KengineCfg {
-	return &KengineCfg{config: cfg}
+func NewGrafanaCfg(cfg map[string]string) *GrafanaCfg {
+	return &GrafanaCfg{config: cfg}
 }
 
-func (c *KengineCfg) Get(key string) string {
+func (c *GrafanaCfg) Get(key string) string {
 	return c.config[key]
 }
 
-func (c *KengineCfg) FeatureToggles() FeatureToggles {
+func (c *GrafanaCfg) FeatureToggles() FeatureToggles {
 	features, exists := c.config[featuretoggles.EnabledFeatures]
 	if !exists || features == "" {
 		return FeatureToggles{}
@@ -68,7 +68,7 @@ func (c *KengineCfg) FeatureToggles() FeatureToggles {
 	}
 }
 
-func (c *KengineCfg) Equal(c2 *KengineCfg) bool {
+func (c *GrafanaCfg) Equal(c2 *GrafanaCfg) bool {
 	if c == nil && c2 == nil {
 		return true
 	}
@@ -102,7 +102,7 @@ type Proxy struct {
 	clientCfg *proxy.ClientCfg
 }
 
-func (c *KengineCfg) proxy() (Proxy, error) {
+func (c *GrafanaCfg) proxy() (Proxy, error) {
 	if v, exists := c.config[proxy.PluginSecureSocksProxyEnabled]; exists && v == strconv.FormatBool(true) {
 		var (
 			allowInsecure = false
@@ -131,15 +131,15 @@ func (c *KengineCfg) proxy() (Proxy, error) {
 	return Proxy{}, nil
 }
 
-func (c *KengineCfg) AppURL() (string, error) {
+func (c *GrafanaCfg) AppURL() (string, error) {
 	url, ok := c.config[AppURL]
 	if !ok {
-		return "", fmt.Errorf("app URL not set in config. A more recent version of Khulnasoft may be required")
+		return "", fmt.Errorf("app URL not set in config. A more recent version of Grafana may be required")
 	}
 	return url, nil
 }
 
-func (c *KengineCfg) ConcurrentQueryCount() (int, error) {
+func (c *GrafanaCfg) ConcurrentQueryCount() (int, error) {
 	count, ok := c.config[ConcurrentQueryCount]
 	if !ok {
 		return 0, fmt.Errorf("ConcurrentQueryCount not set in config")

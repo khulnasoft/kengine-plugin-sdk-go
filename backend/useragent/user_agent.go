@@ -6,24 +6,24 @@ import (
 )
 
 var (
-	userAgentRegex   = regexp.MustCompile(`^Khulnasoft/([0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9]+)?) \(([a-zA-Z0-9]+); ([a-zA-Z0-9]+)\)$`)
+	userAgentRegex   = regexp.MustCompile(`^Grafana/([0-9]+\.[0-9]+\.[0-9]+(?:-[a-zA-Z0-9]+)?) \(([a-zA-Z0-9]+); ([a-zA-Z0-9]+)\)$`)
 	errInvalidFormat = errors.New("invalid user agent format")
 )
 
-// UserAgent represents a Khulnasoft user agent.
-// Its format is "Khulnasoft/<version> (<os>; <arch>)"
-// Example: "Khulnasoft/7.0.0-beta1 (darwin; amd64)", "Khulnasoft/10.0.0 (windows; x86)"
+// UserAgent represents a Grafana user agent.
+// Its format is "Grafana/<version> (<os>; <arch>)"
+// Example: "Grafana/7.0.0-beta1 (darwin; amd64)", "Grafana/10.0.0 (windows; x86)"
 type UserAgent struct {
-	kengineVersion string
+	grafanaVersion string
 	arch           string
 	os             string
 }
 
 // New creates a new UserAgent.
 // The version must be a valid semver string, and the os and arch must be valid strings.
-func New(kengineVersion, os, arch string) (*UserAgent, error) {
+func New(grafanaVersion, os, arch string) (*UserAgent, error) {
 	ua := &UserAgent{
-		kengineVersion: kengineVersion,
+		grafanaVersion: grafanaVersion,
 		os:             os,
 		arch:           arch,
 	}
@@ -39,7 +39,7 @@ func Parse(s string) (*UserAgent, error) {
 	}
 
 	return &UserAgent{
-		kengineVersion: matches[1],
+		grafanaVersion: matches[1],
 		os:             matches[2],
 		arch:           matches[3],
 	}, nil
@@ -48,16 +48,16 @@ func Parse(s string) (*UserAgent, error) {
 // Empty creates a new UserAgent with default values.
 func Empty() *UserAgent {
 	return &UserAgent{
-		kengineVersion: "0.0.0",
+		grafanaVersion: "0.0.0",
 		os:             "unknown",
 		arch:           "unknown",
 	}
 }
 
-func (ua *UserAgent) KengineVersion() string {
-	return ua.kengineVersion
+func (ua *UserAgent) GrafanaVersion() string {
+	return ua.grafanaVersion
 }
 
 func (ua *UserAgent) String() string {
-	return "Khulnasoft/" + ua.kengineVersion + " (" + ua.os + "; " + ua.arch + ")"
+	return "Grafana/" + ua.grafanaVersion + " (" + ua.os + "; " + ua.arch + ")"
 }

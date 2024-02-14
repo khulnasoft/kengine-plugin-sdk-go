@@ -55,7 +55,7 @@ const (
 
 	// defaultRemoteSamplerServiceName is the default service name passed to the remote sampler when it cannot be
 	// determined from the build info.
-	defaultRemoteSamplerServiceName = "kengine-plugin"
+	defaultRemoteSamplerServiceName = "grafana-plugin"
 )
 
 // SetupPluginEnvironment will read the environment variables and apply the

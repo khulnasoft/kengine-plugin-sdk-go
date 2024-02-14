@@ -1,2 +1,2 @@
-// Package live provides types for the Khulnasoft Live server.
+// Package live provides types for the Grafana Live server.
 package live

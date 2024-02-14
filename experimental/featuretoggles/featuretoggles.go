@@ -9,7 +9,7 @@ const (
 	EnabledFeatures = "GF_INSTANCE_FEATURE_TOGGLES_ENABLE"
 )
 
-// FeatureToggles can check if feature toggles are enabled on the Khulnasoft instance.
+// FeatureToggles can check if feature toggles are enabled on the Grafana instance.
 type FeatureToggles interface {
 	// IsEnabled returns true if the provided feature flag is set.
 	IsEnabled(flag string) bool
@@ -44,5 +44,5 @@ func flagsMapFromEnv() map[string]struct{} {
 }
 
 // DefaultFeatureToggles is the default feature toggles implementation.
-// It contains the same feature toggles as the Khulnasoft instance where the plugin is running.
+// It contains the same feature toggles as the Grafana instance where the plugin is running.
 var DefaultFeatureToggles FeatureToggles = newFeatureTogglesFromEnv()
